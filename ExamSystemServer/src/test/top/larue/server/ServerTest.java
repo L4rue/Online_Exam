@@ -9,7 +9,11 @@ public class ServerTest {
         try {
             // 2. 初始化服务器
             sic.serverInit();
-            ServerView sv = new ServerView(sic);
+            // 3. 启动服务器
+            ServerDao sd = new ServerDao();
+            // 4. 接收客户端发来的消息
+            // 5. 处理客户端发来的消息
+            ServerView sv = new ServerView(sic, sd);
             sv.serverMainPage();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

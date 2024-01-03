@@ -21,7 +21,7 @@ public class ClientView {
     /**
      * 绘制主界面
      */
-    public void clientMainPage() throws IOException {
+    public void clientMainPage() throws IOException, ClassNotFoundException {
 
         System.out.println("\n==========================");
         System.out.println("==\t欢迎进入在线考试系统\t==");
@@ -39,7 +39,6 @@ public class ClientView {
                     break;
                 case 2:
                     clientManagerLogin();
-                    System.out.println("正在进入管理员系统...");
                     break;
                 case 0:
                     System.out.println("退出");
@@ -54,7 +53,7 @@ public class ClientView {
     /**
      * 客户端管理员登陆
      */
-    private void clientManagerLogin() throws IOException {
+    private void clientManagerLogin() throws IOException, ClassNotFoundException {
         // 获取用户输入
         System.out.println("请输入管理员的账户信息：");
         String username = ClientScanner.getScanner().next();
@@ -64,5 +63,11 @@ public class ClientView {
         UserMessage userMessage = new UserMessage("managerLogin", new User(username, password));
         // 将UserMessage类型的数据发送给服务器
         cic.getOos().writeObject(userMessage);
+        UserMessage tum = (UserMessage) cic.getOis().readObject();
+        if ("Success".equals(tum.getType())) {
+            System.out.println("管理员登陆成功");
+        } else {
+            System.out.println("管理员登陆失败");
+        }
     }
 }
