@@ -1,4 +1,4 @@
-package com.larue.server;
+package top.larue.server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,6 +18,22 @@ public class ServerInitAndClose {
 
     /** 服务端输出流 */
     private ObjectOutputStream oos;
+
+    public ObjectInputStream getOis() {
+        return ois;
+    }
+
+    public void setOis(ObjectInputStream ois) {
+        this.ois = ois;
+    }
+
+    public ObjectOutputStream getOos() {
+        return oos;
+    }
+
+    public void setOos(ObjectOutputStream oos) {
+        this.oos = oos;
+    }
 
     /**
      * 服务器的初始化操作

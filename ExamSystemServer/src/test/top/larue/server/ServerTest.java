@@ -1,4 +1,4 @@
-package com.larue.server;
+package top.larue.server;
 
 import java.io.IOException;
 
@@ -9,7 +9,9 @@ public class ServerTest {
         try {
             // 2. 初始化服务器
             sic.serverInit();
-        } catch (IOException e) {
+            ServerView sv = new ServerView(sic);
+            sv.serverMainPage();
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {
