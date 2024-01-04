@@ -38,10 +38,12 @@ public class ClientView {
                     System.out.println("正在进入学员系统...");
                     break;
                 case 2:
+                    // 管理员登陆
                     clientManagerLogin();
                     break;
                 case 0:
-                    System.out.println("退出");
+                    // 退出客户端
+                    quieClient();
                     return;
                 default:
                     System.out.println("输入有误，请重新输入...");
@@ -69,5 +71,12 @@ public class ClientView {
         } else {
             System.out.println("管理员登陆失败");
         }
+    }
+
+    /**
+     * 客户端退出
+     */
+    private void quieClient() throws IOException {
+        cic.getOos().writeObject(new UserMessage("quit",null));
     }
 }

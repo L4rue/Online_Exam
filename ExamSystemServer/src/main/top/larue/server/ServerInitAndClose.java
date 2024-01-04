@@ -13,26 +13,12 @@ public class ServerInitAndClose {
     /** 服务端Socket对象 */
     private Socket s;
 
-    /** 服务端输入流 */
-    private ObjectInputStream ois;
-
-    /** 服务端输出流 */
-    private ObjectOutputStream oos;
-
-    public ObjectInputStream getOis() {
-        return ois;
+    public ServerSocket getSs() {
+        return ss;
     }
 
-    public void setOis(ObjectInputStream ois) {
-        this.ois = ois;
-    }
-
-    public ObjectOutputStream getOos() {
-        return oos;
-    }
-
-    public void setOos(ObjectOutputStream oos) {
-        this.oos = oos;
+    public void setSs(ServerSocket ss) {
+        this.ss = ss;
     }
 
     /**
@@ -43,12 +29,12 @@ public class ServerInitAndClose {
         ss = new ServerSocket(8888);
         // 2. 等待客户端的连接请求，调用accept方法
         System.out.println("服务器已经启动，等待客户端连接");
-        s = ss.accept();
-        System.out.println("客户端已经连接");
-        // 3. 使用输入输出流，与客户端通信
-        ois = new ObjectInputStream(s.getInputStream());
-        oos = new ObjectOutputStream(s.getOutputStream());
-        System.out.println("服务器初始化成功");
+        while (true) {
+            s = ss.accept();
+            ServerStreamRunnable ssr = new ServerStreamRunnable(s);
+            // 3. 启动新线程处理每一个客户端连接
+            new Thread(ssr).start();
+        }
     }
 
     /**
@@ -56,9 +42,6 @@ public class ServerInitAndClose {
      */
     public void serverClose() throws IOException {
         // 4. 关闭Socket并释放资源
-        oos.close();
-        ois.close();
-        s.close();
         ss.close();
         System.out.println("服务器已经关闭");
     }

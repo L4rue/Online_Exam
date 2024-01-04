@@ -3,7 +3,7 @@ package top.larue.server;
 import top.larue.model.User;
 
 /**
- * 编程实现数据的存取
+ * 编程实现数据的存取（模拟数据库）
  */
 public class ServerDao {
 
