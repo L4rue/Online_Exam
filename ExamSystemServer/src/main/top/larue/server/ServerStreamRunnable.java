@@ -35,7 +35,7 @@ public class ServerStreamRunnable implements Runnable {
                 if(sv.serverMainPage()) break;
             }
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("客户端异常结束");
         } finally {
             try {
                 ois.close();

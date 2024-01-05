@@ -35,7 +35,8 @@ public class ClientView {
             int choice = ClientScanner.getScanner().nextInt();
             switch (choice) {
                 case 1:
-                    System.out.println("正在进入学员系统...");
+                    // 学员登陆
+                    clientUserLogin();
                     break;
                 case 2:
                     // 管理员登陆
@@ -57,11 +58,11 @@ public class ClientView {
      */
     private void clientManagerLogin() throws IOException, ClassNotFoundException {
         // 获取用户输入
-        System.out.println("请输入管理员的账户信息：");
+        System.out.print("请输入管理员的账户信息：");
         String username = ClientScanner.getScanner().next();
-        System.out.println("请输入密码：");
+        System.out.print("请输入密码：");
         String password = ClientScanner.getScanner().next();
-        // 准备管理员信息
+        // 准备学员信息
         UserMessage userMessage = new UserMessage("managerLogin", new User(username, password));
         // 将UserMessage类型的数据发送给服务器
         cic.getOos().writeObject(userMessage);
@@ -70,6 +71,27 @@ public class ClientView {
             System.out.println("管理员登陆成功");
         } else {
             System.out.println("管理员登陆失败");
+        }
+    }
+
+    /**
+     * 学员登陆
+     */
+    private void clientUserLogin() throws IOException, ClassNotFoundException {
+        // 获取用户输入
+        System.out.print("请输入学员的账户信息：");
+        String username = ClientScanner.getScanner().next();
+        System.out.print("请输入密码：");
+        String password = ClientScanner.getScanner().next();
+        // 准备管理员信息
+        UserMessage userMessage = new UserMessage("userLogin", new User(username, password));
+        // 将UserMessage类型的数据发送给服务器
+        cic.getOos().writeObject(userMessage);
+        UserMessage tum = (UserMessage) cic.getOis().readObject();
+        if ("Success".equals(tum.getType())) {
+            System.out.println("用户登陆成功");
+        } else {
+            System.out.println("用户登陆失败");
         }
     }
 

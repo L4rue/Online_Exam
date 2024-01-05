@@ -35,19 +35,33 @@ public class ServerView {
      */
     public boolean serverMainPage() throws IOException, ClassNotFoundException {
         UserMessage userMessage = (UserMessage) ois.readObject();
-        if (userMessage == null ) return true;
-        if("quit".equals(userMessage.getType())){
+        if (userMessage == null) return true;
+        if ("quit".equals(userMessage.getType())) {
             System.out.println("客户端断开连接");
             return true;
         }
         System.out.println("客户端传来的信息是：" + userMessage);
-        if (sd.serverManagerCheck(userMessage.getUser())) {
-            userMessage.setType("Success");
-            oos.writeObject(userMessage);
-        } else {
-            userMessage.setType("Failed");
-            oos.writeObject(userMessage);
-        }
+        serverCheck(userMessage);
         return false;
+    }
+
+    private void serverCheck(UserMessage userMessage) throws IOException {
+        if ("managerLogin".equals(userMessage.getType())) {
+            if (sd.serverManagerCheck(userMessage.getUser())) {
+                userMessage.setType("Success");
+                oos.writeObject(userMessage);
+            } else {
+                userMessage.setType("Failed");
+                oos.writeObject(userMessage);
+            }
+        } else {
+            if (sd.serverUserCheck(userMessage.getUser())) {
+                userMessage.setType("Success");
+                oos.writeObject(userMessage);
+            } else {
+                userMessage.setType("Failed");
+                oos.writeObject(userMessage);
+            }
+        }
     }
 }

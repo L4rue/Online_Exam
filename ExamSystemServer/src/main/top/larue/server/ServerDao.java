@@ -16,4 +16,14 @@ public class ServerDao {
         }
         return false;
     }
+
+    /**
+     * 编程实现学员账号和密码的校验并将结果返回回去
+     */
+    public boolean serverUserCheck(User user) {
+        if ("user".equals(user.getUsername()) && "user".equals(user.getPassword())) {
+            return true;
+        }
+        return false;
+    }
 }
