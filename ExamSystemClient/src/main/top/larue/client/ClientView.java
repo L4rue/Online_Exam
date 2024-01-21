@@ -63,6 +63,7 @@ public class ClientView {
         UserMessage userMessage = new UserMessage("managerLogin", new User(username, password));
         // 将UserMessage类型的数据发送给服务器
         cic.getOos().writeObject(userMessage);
+
         UserMessage tum = (UserMessage) cic.getOis().readObject();
         if ("Success".equals(tum.getType())) {
             System.out.println("管理员登陆成功");
