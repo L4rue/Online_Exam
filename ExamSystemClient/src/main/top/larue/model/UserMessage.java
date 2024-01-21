@@ -16,10 +16,6 @@ public class UserMessage implements Serializable {
         this.user = user;
     }
 
-    public UserMessage(String type) {
-        this.type = type;
-    }
-
     public String getType() {
         return type;
     }
